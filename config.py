@@ -29,7 +29,6 @@ import subprocess
 from libqtile import bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
-from libqtile.extension import CommandSet
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
 from colors.nord import colors
@@ -113,16 +112,9 @@ keys = [
     Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch apps using rofi"),
     Key([mod], "f", lazy.spawn("rofi -show filebrowser"), desc="Browse file using rofi"),
     Key([mod, "control"], "space", z_next_keyboard, desc="Change keyboard layout"),
-    Key([mod, 'control'], 'x', lazy.run_extension(CommandSet(
-    commands={
-        'shutdown': 'systemctl poweroff',
-        'reboot': 'systemctl reboot',
-        'suspend': 'systemctl suspend',
-        'logout': 'loginctl terminate-session $XDG_SESSION_ID',
-        'switch user': 'dm-tool switch-to-greeter',
-    },
-    dmenu_prompt='session>',
-)), desc='List options to quit the session.'),
+    Key([mod, 'control'], 'x',
+        lazy.spawn("rofi -show p -modi p:rofi-power-menu -font 'Fira Code Nerd Font Mono 10' -lines 6"),
+        desc="Open the power menu"),
     Key([mod], 'm', lazy.spawn('xflock4'), desc="Lock the screen"),
 ]
 
@@ -157,7 +149,7 @@ layout_theme = {
         "border_width": 2,
         "border_focus": colors["blue"],
         "border_normal": colors["darkbg"],
-        "margin": [5, 9, 5, 9]
+        "margin": [5, 5, 5, 5]
         }
 
 layouts = [

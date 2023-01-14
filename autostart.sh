@@ -12,3 +12,6 @@ xfce4-power-manager &
 
 # Start xscreensaver
 xscreensaver -nosplash &
+
+# Run spotifyd
+~/spotifyd/target/release/spotifyd &
