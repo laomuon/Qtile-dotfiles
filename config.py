@@ -29,6 +29,9 @@ import subprocess
 from libqtile import bar, layout, hook
 from libqtile.config import Click, Drag, Group, Key, Match, Screen
 from libqtile.lazy import lazy
+from libqtile.core.manager import Qtile
+from libqtile.utils import send_notification
+from libqtile.log_utils import logger
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
 from colors.nord import colors
@@ -62,9 +65,21 @@ def dbus_register():
                       'string:' + id])
 
 
+@hook.subscribe.client_focus
+def float_to_front(window):
+    if window.floating:
+        window.bring_to_front()
+
 @lazy.function
 def z_next_keyboard(qtile):
     keyboard_widget.next_keyboard()
+
+
+powerline = {
+    "decorations": [
+        PowerLineDecoration(path="arrow_right")
+    ]
+}
 
 
 keys = [
@@ -111,11 +126,14 @@ keys = [
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch apps using rofi"),
     Key([mod], "f", lazy.spawn("rofi -show filebrowser"), desc="Browse file using rofi"),
-    Key([mod, "control"], "space", z_next_keyboard, desc="Change keyboard layout"),
+    Key([mod, "shift"], "space", z_next_keyboard, desc="Change keyboard layout"),
     Key([mod, 'control'], 'x',
         lazy.spawn("rofi -show p -modi p:rofi-power-menu -font 'Fira Code Nerd Font Mono 10' -lines 6"),
         desc="Open the power menu"),
-    Key([mod], 'm', lazy.spawn('xflock4'), desc="Lock the screen"),
+    Key([mod], 'm', lazy.spawn('gnome-screensaver-command -l'), desc="Lock the screen"),
+    Key([], "XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol()),
+    Key([], "XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol()),
+    Key([], "XF86AudioMute", lazy.widget["pulsevolume"].mute()),
 ]
 
 groups = [Group(i, label="") for i in "123456"]
@@ -146,10 +164,10 @@ for i in groups:
     )
 
 layout_theme = {
-        "border_width": 2,
+        # "border_width": 2,
         "border_focus": colors["blue"],
         "border_normal": colors["darkbg"],
-        "margin": [5, 5, 5, 5]
+        "margin": [5, 9, 5, 9]
         }
 
 layouts = [
@@ -174,11 +192,6 @@ widget_defaults = dict(
     foreground=colors["fg"][0],
     padding=10,
 )
-powerline = {
-    "decorations": [
-        PowerLineDecoration(path="arrow_right")
-    ]
-}
 keyboard_widget = widget.KeyboardLayout(configured_keyboards=configured_keyboard, background=decor_colors[2], **powerline)
 extension_defaults = widget_defaults.copy()
 screens = [
@@ -219,7 +232,6 @@ screens = [
                     ),
                 widget.Prompt(),
                 widget.Spacer(**powerline),
-                widget.PulseVolume(background=decor_colors[1], **powerline),
                 widget.Chord(
                     chords_colors={
                         "launch": ("#ff0000", "#ffffff"),
@@ -228,24 +240,26 @@ screens = [
                 ),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
+                widget.PulseVolume(background=decor_colors[1], **powerline),
                 keyboard_widget,
+                # widget.Bluetooth(),
                 widget.GithubNotifications(
                     icon_size=15,
                     token_file="~/tokens/github.token",
                     mouse_callbacks={
-                        "Button1": lazy.spawn(["xdg-open", "https://github.com/notifications"])
+                        "Button1": lazy.spawn([browser, "-new-tab", "https://github.com/notifications"])
                     },
                     update_interval=10,
                     background=decor_colors[3],
                     **powerline,
                 ),
-                widget.WiFiIcon(
-                        interface="wlp9s0",
-                        padding=6,
-                        mouse_callbacks={"Button1": lazy.spawn("alacritty -e 'nmtui'")},
-                        background=decor_colors[7],
-                        **powerline,
-                ),
+                # widget.WiFiIcon(
+                #         interface="wlp9s0",
+                #         padding=6,
+                #         mouse_callbacks={"Button1": lazy.spawn("alacritty -e 'nmtui'")},
+                #         background=decor_colors[7],
+                #         **powerline,
+                # ),
                 widget.Clock(format="%H:%M  %d/%m/%y", background=decor_colors[8], **powerline),
                 widget.UPowerWidget(background=decor_colors[9], **powerline),
                 widget.QuickExit(
@@ -257,7 +271,7 @@ screens = [
             25,
             margin=[5, 9, 0, 9],
             background=colors["lightbg"],
-            opacity=0.7,
+            opacity=1
             # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
             # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
@@ -269,6 +283,7 @@ screens = [
         wallpaper_mode='fill'
     ),
 ]
+logger.warning(lazy.widget)
 
 # Drag floating layouts.
 mouse = [
@@ -294,6 +309,7 @@ floating_layout = layout.Floating(
         Match(title="pinentry"),  # GPG key password entry
     ]
 )
+layouts.append(floating_layout)
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 reconfigure_screens = True
