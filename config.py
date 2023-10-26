@@ -34,9 +34,11 @@ from libqtile.utils import send_notification
 from libqtile.log_utils import logger
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
-from colors.nord import colors
+# from colors.nord import colors
 from colors.winter_rainbow import colors as decor_colors
 # from colors.catpuccin import colors
+from colors.kanagawa import colors
+
 
 mod = "mod4"
 terminal = "alacritty"
@@ -165,9 +167,9 @@ for i in groups:
 
 layout_theme = {
         # "border_width": 2,
-        "border_focus": colors["blue"],
-        "border_normal": colors["darkbg"],
-        "margin": [5, 9, 5, 9]
+        "border_focus": colors["highlight-background-color"],
+        "border_normal": colors["background-color"],
+        "margin": [5, 5, 5, 5]
         }
 
 layouts = [
@@ -188,8 +190,8 @@ layouts = [
 widget_defaults = dict(
     font="Font Awesome",
     fontsize=12,
-    background=colors["bg"][0],
-    foreground=colors["fg"][0],
+    background=colors["background-color"],
+    foreground=colors["foreground-color"],
     padding=10,
 )
 keyboard_widget = widget.KeyboardLayout(configured_keyboards=configured_keyboard, background=decor_colors[2], **powerline)
@@ -205,7 +207,7 @@ screens = [
                     ),
                 widget.TextBox(
                         text="",
-                        foreground=colors["super blue"],
+                        foreground=colors["bold-color"],
                         fontsize=20,
                     ),
                 widget.GroupBox(
@@ -215,15 +217,15 @@ screens = [
                     padding_y=5,
                     padding_x=3,
                     borderwidth=3,
-                    active=colors["super cyan"],
+                    active=colors["highlight-foreground-color"],
                     rounded=True,
                     highlight_method="text",
-                    this_current_screen_border=colors["green"],
+                    this_current_screen_border=colors["highlight-background-color"],
                     ),
                 widget.TextBox(
                         font="Font Awesome",
                         text="",
-                        foreground=colors["super blue"],
+                        foreground=colors["bold-color"],
                         fontsize=20,
                     ),
                 widget.Sep(
@@ -242,7 +244,6 @@ screens = [
                 # widget.StatusNotifier(),
                 widget.PulseVolume(background=decor_colors[1], **powerline),
                 keyboard_widget,
-                # widget.Bluetooth(),
                 widget.GithubNotifications(
                     icon_size=15,
                     token_file="~/tokens/github.token",
@@ -253,13 +254,6 @@ screens = [
                     background=decor_colors[3],
                     **powerline,
                 ),
-                # widget.WiFiIcon(
-                #         interface="wlp9s0",
-                #         padding=6,
-                #         mouse_callbacks={"Button1": lazy.spawn("alacritty -e 'nmtui'")},
-                #         background=decor_colors[7],
-                #         **powerline,
-                # ),
                 widget.Clock(format="%H:%M  %d/%m/%y", background=decor_colors[8], **powerline),
                 widget.UPowerWidget(background=decor_colors[9], **powerline),
                 widget.QuickExit(
@@ -269,11 +263,9 @@ screens = [
                 ),
             ],
             25,
-            margin=[5, 9, 0, 9],
-            background=colors["lightbg"],
+            margin=[5, 5, 0, 5],
+            background=colors["background-color"],
             opacity=1
-            # border_width=[2, 0, 2, 0],  # Draw top and bottom borders
-            # border_color=["ff00ff", "000000", "ff00ff", "000000"]  # Borders are magenta
         ),
         wallpaper='~/.config/qtile/wallpaper.png',
         wallpaper_mode='fill',
@@ -294,7 +286,7 @@ mouse = [
 
 dgroups_key_binder = None
 dgroups_app_rules = []  # type: list
-follow_mouse_focus = False
+follow_mouse_focus = True
 bring_front_click = False
 cursor_warp = False
 floating_layout = layout.Floating(
@@ -329,4 +321,4 @@ wl_input_rules = None
 #
 # We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
 # java that happens to be on java's whitelist.
-wmname = "LG3D"
+wmname = "Qtile"
