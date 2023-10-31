@@ -35,7 +35,7 @@ from libqtile.log_utils import logger
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
 # from colors.nord import colors
-from colors.winter_rainbow import colors as decor_colors
+# from colors.winter_rainbow import colors as decor_colors
 # from colors.catpuccin import colors
 from colors.kanagawa import colors
 
@@ -194,7 +194,7 @@ widget_defaults = dict(
     foreground=colors["foreground-color"],
     padding=10,
 )
-keyboard_widget = widget.KeyboardLayout(configured_keyboards=configured_keyboard, background=decor_colors[2], **powerline)
+keyboard_widget = widget.KeyboardLayout(configured_keyboards=configured_keyboard, background=colors["magenta"], **powerline)
 extension_defaults = widget_defaults.copy()
 screens = [
     Screen(
@@ -242,7 +242,7 @@ screens = [
                 ),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.PulseVolume(background=decor_colors[1], **powerline),
+                widget.PulseVolume(background=colors["cyan"], **powerline),
                 keyboard_widget,
                 widget.GithubNotifications(
                     icon_size=15,
@@ -251,15 +251,15 @@ screens = [
                         "Button1": lazy.spawn([browser, "-new-tab", "https://github.com/notifications"])
                     },
                     update_interval=10,
-                    background=decor_colors[3],
+                    background=colors["yellow"],
                     **powerline,
                 ),
-                widget.Clock(format="%H:%M  %d/%m/%y", background=decor_colors[8], **powerline),
-                widget.UPowerWidget(background=decor_colors[9], **powerline),
+                widget.Clock(format="%H:%M  %d/%m/%y", background=colors["blue"], **powerline),
+                widget.UPowerWidget(background=colors["green"], **powerline),
                 widget.QuickExit(
                     default_text="",
                     countdown_format='[{}]',
-                    background=decor_colors[10],
+                    background=colors["red"],
                 ),
             ],
             25,
