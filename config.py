@@ -34,9 +34,6 @@ from libqtile.utils import send_notification
 from libqtile.log_utils import logger
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
-# from colors.nord import colors
-# from colors.winter_rainbow import colors as decor_colors
-# from colors.catpuccin import colors
 from colors.kanagawa import colors
 
 
