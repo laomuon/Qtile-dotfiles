@@ -45,23 +45,27 @@ configured_keyboard = ["us", "fr"]
 
 @hook.subscribe.startup
 def autostart():
-    home = os.path.expanduser('~/.config/qtile/autostart.sh')
+    home = os.path.expanduser("~/.config/qtile/autostart.sh")
     subprocess.run([home])
 
 
 @hook.subscribe.startup
 def dbus_register():
-    id = os.environ.get('DESKTOP_AUTOSTART_ID')
+    id = os.environ.get("DESKTOP_AUTOSTART_ID")
     if not id:
         return
-    subprocess.Popen(['dbus-send',
-                      '--session',
-                      '--print-reply',
-                      '--dest=org.gnome.SessionManager',
-                      '/org/gnome/SessionManager',
-                      'org.gnome.SessionManager.RegisterClient',
-                      'string:qtile',
-                      'string:' + id])
+    subprocess.Popen(
+        [
+            "dbus-send",
+            "--session",
+            "--print-reply",
+            "--dest=org.gnome.SessionManager",
+            "/org/gnome/SessionManager",
+            "org.gnome.SessionManager.RegisterClient",
+            "string:qtile",
+            "string:" + id,
+        ]
+    )
 
 
 @hook.subscribe.client_focus
@@ -69,16 +73,13 @@ def float_to_front(window):
     if window.floating:
         window.bring_to_front()
 
+
 @lazy.function
 def z_next_keyboard(qtile):
     keyboard_widget.next_keyboard()
 
 
-powerline = {
-    "decorations": [
-        PowerLineDecoration(path="arrow_right")
-    ]
-}
+powerline = {"decorations": [PowerLineDecoration(path="arrow_right")]}
 
 
 keys = [
@@ -89,17 +90,31 @@ keys = [
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
     Key([mod], "j", lazy.layout.down(), desc="Move focus down"),
     Key([mod], "k", lazy.layout.up(), desc="Move focus up"),
-    Key([mod], "space", lazy.window.toggle_maximize(), desc="Move window focus to other window"),
+    Key(
+        [mod],
+        "space",
+        lazy.window.toggle_maximize(),
+        desc="Move window focus to other window",
+    ),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
-    Key([mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"),
-    Key([mod, "shift"], "l", lazy.layout.shuffle_right(), desc="Move window to the right"),
+    Key(
+        [mod, "shift"], "h", lazy.layout.shuffle_left(), desc="Move window to the left"
+    ),
+    Key(
+        [mod, "shift"],
+        "l",
+        lazy.layout.shuffle_right(),
+        desc="Move window to the right",
+    ),
     Key([mod, "shift"], "j", lazy.layout.shuffle_down(), desc="Move window down"),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up(), desc="Move window up"),
     # Grow windows. If current window is on the edge of screen and direction
     # will be to screen edge - window would shrink.
     Key([mod, "control"], "h", lazy.layout.grow_left(), desc="Grow window to the left"),
-    Key([mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"),
+    Key(
+        [mod, "control"], "l", lazy.layout.grow_right(), desc="Grow window to the right"
+    ),
     Key([mod, "control"], "j", lazy.layout.grow_down(), desc="Grow window down"),
     Key([mod, "control"], "k", lazy.layout.grow_up(), desc="Grow window up"),
     Key([mod], "n", lazy.layout.normalize(), desc="Reset all window sizes"),
@@ -124,12 +139,19 @@ keys = [
     Key([mod, "control"], "r", lazy.reload_config(), desc="Reload the config"),
     Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown Qtile"),
     Key([mod], "r", lazy.spawn("rofi -show drun"), desc="Launch apps using rofi"),
-    Key([mod], "f", lazy.spawn("rofi -show filebrowser"), desc="Browse file using rofi"),
+    Key(
+        [mod], "f", lazy.spawn("rofi -show filebrowser"), desc="Browse file using rofi"
+    ),
     Key([mod, "shift"], "space", z_next_keyboard, desc="Change keyboard layout"),
-    Key([mod, 'control'], 'x',
-        lazy.spawn("rofi -show p -modi p:rofi-power-menu -font 'Fira Code Nerd Font Mono 10' -lines 6"),
-        desc="Open the power menu"),
-    Key([mod], 'm', lazy.spawn('gnome-screensaver-command -l'), desc="Lock the screen"),
+    Key(
+        [mod, "control"],
+        "x",
+        lazy.spawn(
+            "rofi -show p -modi p:rofi-power-menu -font 'Fira Code Nerd Font Mono 10' -lines 6"
+        ),
+        desc="Open the power menu",
+    ),
+    Key([mod], "m", lazy.spawn("gnome-screensaver-command -l"), desc="Lock the screen"),
     Key([], "XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol()),
     Key([], "XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol()),
     Key([], "XF86AudioMute", lazy.widget["pulsevolume"].mute()),
@@ -163,11 +185,11 @@ for i in groups:
     )
 
 layout_theme = {
-        # "border_width": 2,
-        "border_focus": colors["highlight-background-color"],
-        "border_normal": colors["background-color"],
-        "margin": [5, 5, 5, 5]
-        }
+    # "border_width": 2,
+    "border_focus": colors["highlight-background-color"],
+    "border_normal": colors["background-color"],
+    "margin": [5, 5, 5, 5],
+}
 
 layouts = [
     layout.Columns(**layout_theme),
@@ -191,7 +213,11 @@ widget_defaults = dict(
     foreground=colors["foreground-color"],
     padding=10,
 )
-keyboard_widget = widget.KeyboardLayout(configured_keyboards=configured_keyboard, background=colors["lighter-foreground"], **powerline)
+keyboard_widget = widget.KeyboardLayout(
+    configured_keyboards=configured_keyboard,
+    background=colors["lighter-foreground"],
+    **powerline,
+)
 extension_defaults = widget_defaults.copy()
 screens = [
     Screen(
@@ -199,14 +225,14 @@ screens = [
             [
                 widget.CurrentLayoutIcon(fontsize=7),
                 widget.Sep(
-                        linewidth=0,
-                        padding=5,
-                    ),
+                    linewidth=0,
+                    padding=5,
+                ),
                 widget.TextBox(
-                        text="",
-                        foreground=colors["bold-color"],
-                        fontsize=20,
-                    ),
+                    text="",
+                    foreground=colors["bold-color"],
+                    fontsize=20,
+                ),
                 widget.GroupBox(
                     fontsize=15,
                     margin_y=3,
@@ -218,17 +244,17 @@ screens = [
                     rounded=True,
                     highlight_method="text",
                     this_current_screen_border=colors["highlight-background-color"],
-                    ),
+                ),
                 widget.TextBox(
-                        font="Font Awesome",
-                        text="",
-                        foreground=colors["bold-color"],
-                        fontsize=20,
-                    ),
+                    font="Font Awesome",
+                    text="",
+                    foreground=colors["bold-color"],
+                    fontsize=20,
+                ),
                 widget.Sep(
-                        linewidth=0,
-                        padding=5,
-                    ),
+                    linewidth=0,
+                    padding=5,
+                ),
                 widget.Prompt(),
                 widget.Spacer(**powerline),
                 widget.Chord(
@@ -245,34 +271,46 @@ screens = [
                     icon_size=15,
                     token_file="~/tokens/github.token",
                     mouse_callbacks={
-                        "Button1": lazy.spawn([browser, "-new-tab", "https://github.com/notifications"])
+                        "Button1": lazy.spawn(
+                            [browser, "-new-tab", "https://github.com/notifications"]
+                        )
                     },
                     update_interval=10,
                     background=colors["black"],
                     **powerline,
                 ),
-                widget.Clock(format="%H:%M  %d/%m/%y", background=colors["lighter-foreground"], **powerline),
-                widget.UPowerWidget(background=colors["darker-foreground"], **powerline),
+                widget.Clock(
+                    format="%H:%M  %d/%m/%y",
+                    background=colors["lighter-foreground"],
+                    **powerline,
+                ),
+                widget.UPowerWidget(
+                    background=colors["darker-foreground"], **powerline
+                ),
             ],
             25,
             margin=[5, 5, 0, 5],
             background=colors["background-color"],
-            opacity=1
+            opacity=1,
         ),
-        wallpaper='~/.config/qtile/wallpaper.png',
-        wallpaper_mode='fill',
+        wallpaper="~/.config/qtile/wallpaper.png",
+        wallpaper_mode="fill",
     ),
-    Screen(
-        wallpaper='~/.config/qtile/kana_dark.jpg',
-        wallpaper_mode='fill'
-    ),
+    Screen(wallpaper="~/.config/qtile/kana_dark.jpg", wallpaper_mode="fill"),
 ]
 logger.warning(lazy.widget)
 
 # Drag floating layouts.
 mouse = [
-    Drag([mod], "Button1", lazy.window.set_position_floating(), start=lazy.window.get_position()),
-    Drag([mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()),
+    Drag(
+        [mod],
+        "Button1",
+        lazy.window.set_position_floating(),
+        start=lazy.window.get_position(),
+    ),
+    Drag(
+        [mod], "Button3", lazy.window.set_size_floating(), start=lazy.window.get_size()
+    ),
     Click([mod], "Button2", lazy.window.bring_to_front()),
 ]
 
