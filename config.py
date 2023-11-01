@@ -194,7 +194,7 @@ widget_defaults = dict(
     foreground=colors["foreground-color"],
     padding=10,
 )
-keyboard_widget = widget.KeyboardLayout(configured_keyboards=configured_keyboard, background=colors["magenta"], **powerline)
+keyboard_widget = widget.KeyboardLayout(configured_keyboards=configured_keyboard, background=colors["lighter-foreground"], **powerline)
 extension_defaults = widget_defaults.copy()
 screens = [
     Screen(
@@ -242,7 +242,7 @@ screens = [
                 ),
                 # NB Systray is incompatible with Wayland, consider using StatusNotifier instead
                 # widget.StatusNotifier(),
-                widget.PulseVolume(background=colors["cyan"], **powerline),
+                widget.PulseVolume(background=colors["darker-foreground"], **powerline),
                 keyboard_widget,
                 widget.GithubNotifications(
                     icon_size=15,
@@ -251,16 +251,11 @@ screens = [
                         "Button1": lazy.spawn([browser, "-new-tab", "https://github.com/notifications"])
                     },
                     update_interval=10,
-                    background=colors["yellow"],
+                    background=colors["black"],
                     **powerline,
                 ),
-                widget.Clock(format="%H:%M  %d/%m/%y", background=colors["blue"], **powerline),
-                widget.UPowerWidget(background=colors["green"], **powerline),
-                widget.QuickExit(
-                    default_text="",
-                    countdown_format='[{}]',
-                    background=colors["red"],
-                ),
+                widget.Clock(format="%H:%M  %d/%m/%y", background=colors["lighter-foreground"], **powerline),
+                widget.UPowerWidget(background=colors["darker-foreground"], **powerline),
             ],
             25,
             margin=[5, 5, 0, 5],

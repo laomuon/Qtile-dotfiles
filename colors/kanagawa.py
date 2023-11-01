@@ -16,9 +16,7 @@ colors = {
     "magenta": '#957fb8',
     "cyan":    '#6a9589',
     "white":   '#c8c093',
-    "lotusBlue1": "#c7d7e0",
-    "lotusBlue2": "#b5cbd2",
-    "lotusBlue3": "#9fb5c9",
-    "lotusBlue4": "#4d699b",
-    "lotusBlue5": "#5d57a3",
+    "darker-foreground": "#54546D",
+    "lighter-foreground": "#363646",
+    "popup-background": "#223249",
 }
