@@ -133,6 +133,7 @@ keys = [
     Key([mod], "s", lazy.spawn("spotify"), desc="Launch spotify"),
     Key([mod], "d", lazy.spawn("discord"), desc="Launch discord"),
     Key([mod], "z", lazy.spawn("zulip"), desc="Launch zulip"),
+    Key([mod], "a", lazy.spawn("zathura"), desc="Launch zathura"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
