@@ -11,6 +11,12 @@ configured_keyboard = ["us", "fr"]
 
 browser = 'firefox'
 
+
+@lazy.function
+def z_next_keyboard(qtile):
+    keyboard_widget.next_keyboard()
+
+
 widget_defaults = dict(
     font="Font Awesome",
     fontsize=12,
