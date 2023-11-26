@@ -1,4 +1,5 @@
-from libqtile import hook
+from libqtile import hook, qtile
+from libqtile.utils import send_notification
 import os
 import subprocess
 
@@ -14,7 +15,12 @@ def float_to_front(window):
         window.bring_to_front()
 
 
-@hook.subscribe.screen_change
-def on_screen_change(event):
+@hook.subscribe.screens_reconfigured
+def on_screen_change():
     home = os.path.expanduser("~/.config/qtile/change_screen.sh")
     subprocess.run([home])
+#
+#
+# @hook.subscribe.suspend
+# def lock_on_sleep():
+    # qtile.spawn("light-locker-command -l")

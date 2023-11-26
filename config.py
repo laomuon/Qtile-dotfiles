@@ -24,8 +24,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-from module.keys import keys, mouse
+from module.keys import keys, mouse, groups
 from module.layout import layouts
-from module.screen import screens, keyboard_widget, z_next_keyboard
+from module.screen import screens, keyboard_widget, z_next_keyboard, widget_defaults
 from module.hooks import *
 from module.options import *

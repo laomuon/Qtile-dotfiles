@@ -52,6 +52,7 @@ keys = [
     Key([mod], "d", lazy.spawn("discord"), desc="Launch discord"),
     Key([mod], "z", lazy.spawn("zulip"), desc="Launch zulip"),
     Key([mod], "a", lazy.spawn("zathura"), desc="Launch zathura"),
+    Key([mod], "t", lazy.spawn("thunderbird"), desc="Launch thunderbird"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
@@ -61,7 +62,6 @@ keys = [
     Key(
         [mod], "f", lazy.spawn("rofi -show filebrowser"), desc="Browse file using rofi"
     ),
-    # Key([mod, "shift"], "space", z_next_keyboard, desc="Change keyboard layout"),
     Key(
         [mod, "control"],
         "x",
@@ -82,24 +82,18 @@ groups = [Group(i, label="") for i in "123456"]
 for i in groups:
     keys.extend(
         [
-            # mod1 + letter of group = switch to group
             Key(
                 [mod],
                 i.name,
                 lazy.group[i.name].toscreen(),
                 desc="Switch to group {}".format(i.name),
             ),
-            # mod1 + shift + letter of group = switch to & move focused window to group
             Key(
                 [mod, "shift"],
                 i.name,
                 lazy.window.togroup(i.name, switch_group=True),
                 desc="Switch to & move focused window to group {}".format(i.name),
             ),
-            # Or, use below if you prefer not to switch to that group.
-            # # mod1 + shift + letter of group = move focused window to group
-            # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            #     desc="move focused window to group {}".format(i.name)),
         ]
     )
 

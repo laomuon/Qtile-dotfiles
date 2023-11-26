@@ -15,4 +15,4 @@ ibus-daemon &
 # xscreensaver -nosplash &
 
 # Start gnome-screensaver
-gnome-screensaver &
+light-locker &
