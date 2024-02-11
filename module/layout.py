@@ -7,7 +7,7 @@ layout_theme = {
     # "border_width": 2,
     "border_focus": colors["highlight-background-color"],
     "border_normal": colors["background-color"],
-    "margin": [5, 5, 5, 5],
+    "margin": [0, 0, 0, 0],
 }
 
 layouts = [
