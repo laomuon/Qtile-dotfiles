@@ -9,7 +9,7 @@ powerline = {"decorations": [PowerLineDecoration(path="arrow_right")]}
 
 configured_keyboard = ["us", "fr"]
 
-browser = 'firefox'
+browser = "firefox"
 
 
 @lazy.function

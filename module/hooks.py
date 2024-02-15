@@ -3,6 +3,7 @@ from libqtile.utils import send_notification
 import os
 import subprocess
 
+
 @hook.subscribe.startup
 def autostart():
     home = os.path.expanduser("~/.config/qtile/autostart.sh")
@@ -19,8 +20,10 @@ def float_to_front(window):
 def on_screen_change():
     home = os.path.expanduser("~/.config/qtile/change_screen.sh")
     subprocess.run([home])
+
+
 #
 #
 # @hook.subscribe.suspend
 # def lock_on_sleep():
-    # qtile.spawn("light-locker-command -l")
+# qtile.spawn("light-locker-command -l")

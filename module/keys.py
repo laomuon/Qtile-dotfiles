@@ -74,7 +74,7 @@ keys = [
         [mod],
         "c",
         lazy.spawn(
-            "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}' -font 'Fira Code Nerd Font Mono 10' -lines 6"
+            "rofi -theme-str 'window {width: 50%;}' -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}' -font 'Fira Code Nerd Font Mono 10' -lines 6"
         ),
         desc="Open the clipboard menu",
     ),
