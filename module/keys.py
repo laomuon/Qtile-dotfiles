@@ -70,6 +70,14 @@ keys = [
         ),
         desc="Open the power menu",
     ),
+    Key(
+        [mod],
+        "c",
+        lazy.spawn(
+            "rofi -modi 'clipboard:greenclip print' -show clipboard -run-command '{cmd}' -font 'Fira Code Nerd Font Mono 10' -lines 6"
+        ),
+        desc="Open the clipboard menu",
+    ),
     Key([mod], "m", lazy.spawn("gnome-screensaver-command -l"), desc="Lock the screen"),
     Key([], "XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol()),
     Key([], "XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol()),

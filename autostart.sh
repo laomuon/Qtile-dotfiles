@@ -16,3 +16,6 @@ ibus-daemon &
 
 # Start gnome-screensaver
 light-locker &
+
+# Start greenclip
+pkill greenclip && greenclip clear && greenclip daemon &
