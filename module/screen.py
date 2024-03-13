@@ -93,7 +93,9 @@ screens = [
                 widget.Clock(
                     format="%H:%M  %d/%m/%y",
                     background=colors["lighter-foreground"],
-                    timezone="Asia/Ho_Chi_Minh",
+                    timezone="Europe/Paris",
+                    # timezone="Asia/Ho_Chi_Minh",
+                    # timezone="Asia/Singapore",
                     **powerline,
                 ),
                 widget.UPowerWidget(
