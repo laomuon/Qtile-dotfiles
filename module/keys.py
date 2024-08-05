@@ -1,9 +1,17 @@
 from libqtile.lazy import lazy
 from libqtile.config import Click, Drag, Group, Key
+from libqtile.widget import backlight
 
 mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
+
+def _change_brightness(increased):
+    if increased:
+        lazy.spawn("brightnessctl -d intel_backlight +10%")
+    else:
+        lazy.spawn("brightnessctl -d intel_backlight 10%-")
+
 keys = [
     # A list of available commands that can be bound to keys can be found
     # at https://docs.qtile.org/en/latest/manual/config/lazy.html
@@ -78,10 +86,12 @@ keys = [
         ),
         desc="Open the clipboard menu",
     ),
-    Key([mod], "m", lazy.spawn("gnome-screensaver-command -l"), desc="Lock the screen"),
+    Key([mod], "m", lazy.spawn("i3lock --nofork -i /home/muon/.config/qtile/kana_dark_2.png"), desc="Lock the screen"),
     Key([], "XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol()),
     Key([], "XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol()),
     Key([], "XF86AudioMute", lazy.widget["pulsevolume"].mute()),
+    Key([], "XF86MonBrightnessUp", lazy.widget['brightnesscontrol'].brightness_up()),
+    Key([], "XF86MonBrightnessDown", lazy.widget['brightnesscontrol'].brightness_down()),
 ]
 
 groups = [Group(i, label="") for i in "123456"]

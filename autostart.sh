@@ -1,7 +1,4 @@
 #!/bin/sh
-# Start the docker
-docker start eureka-dev-env_base_1
-docker start eureka-model-server
 
 ## Starting compositor on startup for transparency
 picom --daemon --config ~/.config/picom/picom.conf -b &
@@ -15,7 +12,8 @@ ibus-daemon &
 # xscreensaver -nosplash &
 
 # Start gnome-screensaver
-light-locker &
+# light-locker &
+xss-lock --transfer-sleep-lock -- i3lock --nofork -i /home/muon/.config/qtile/kana_dark_2.png &
 
 # Start greenclip
 pkill greenclip && greenclip clear && greenclip daemon &

@@ -67,6 +67,10 @@ screens = [
                     padding=5,
                 ),
                 widget.Prompt(),
+                widget.BrightnessControl(),
+                #     backlight_name = "intel_backlight",
+                #     change_command = 'brightnessctl -d intel_backlight set {0}%'
+                # ),
                 widget.Spacer(**powerline),
                 widget.Chord(
                     chords_colors={
