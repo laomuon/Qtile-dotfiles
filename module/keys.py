@@ -58,7 +58,7 @@ keys = [
     Key([mod], "Backspace", lazy.spawn(browser), desc="Launch browser"),
     Key([mod], "s", lazy.spawn("spotify"), desc="Launch spotify"),
     Key([mod], "d", lazy.spawn("discord"), desc="Launch discord"),
-    Key([mod], "z", lazy.spawn("zulip"), desc="Launch zulip"),
+    Key([mod], "z", lazy.spawn("zotero"), desc="Launch zotero"),
     Key([mod], "a", lazy.spawn("zathura"), desc="Launch zathura"),
     Key([mod], "t", lazy.spawn("thunderbird"), desc="Launch thunderbird"),
     # Toggle between different layouts as defined below
@@ -86,7 +86,7 @@ keys = [
         ),
         desc="Open the clipboard menu",
     ),
-    Key([mod], "m", lazy.spawn("i3lock --nofork -i /home/muon/.config/qtile/kana_dark_2.png"), desc="Lock the screen"),
+    Key([mod], "m", lazy.spawn("i3lock --nofork -t -i /home/muon/.config/qtile/kana_dark_2.png"), desc="Lock the screen"),
     Key([], "XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol()),
     Key([], "XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol()),
     Key([], "XF86AudioMute", lazy.widget["pulsevolume"].mute()),
