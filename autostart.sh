@@ -22,7 +22,7 @@ xset s off &
 xset -dpms &
 
 # Enable mousepad tappint
-xinput set-prop 18 349 1
+# xinput set-prop 18 349 1
 
 # Start greenclip
 pkill greenclip && greenclip clear && greenclip daemon &
