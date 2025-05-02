@@ -86,7 +86,7 @@ keys = [
         ),
         desc="Open the clipboard menu",
     ),
-    Key([mod], "m", lazy.spawn("i3lock --nofork -t -i /home/muon/.config/qtile/kana_dark_2.png"), desc="Lock the screen"),
+    Key([mod], "m", lazy.spawn("i3lock --nofork -t -i /home/dmmuon/.config/qtile/kana_dark_2.png"), desc="Lock the screen"),
     Key([], "XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol()),
     Key([], "XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol()),
     Key([], "XF86AudioMute", lazy.widget["pulsevolume"].mute()),

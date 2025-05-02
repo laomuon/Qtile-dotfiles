@@ -22,6 +22,10 @@ def on_screen_change():
     subprocess.run([home])
 
 
+@hook.subscribe.startup_complete
+def on_startup_complete():
+    home = os.path.expanduser("~/.config/qtile/change_screen.sh")
+    subprocess.run([home])
 #
 #
 # @hook.subscribe.suspend

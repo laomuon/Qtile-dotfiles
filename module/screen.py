@@ -43,6 +43,9 @@ screens = [
                     text="",
                     foreground=colors["bold-color"],
                     fontsize=20,
+                    mouse_callbacks={
+                        "Button1": lazy.screen.prev_group()
+                    },
                 ),
                 widget.GroupBox(
                     fontsize=15,
@@ -61,6 +64,9 @@ screens = [
                     text="",
                     foreground=colors["bold-color"],
                     fontsize=20,
+                    mouse_callbacks={
+                        "Button1": lazy.screen.next_group()
+                    },
                 ),
                 widget.Sep(
                     linewidth=0,
