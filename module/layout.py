@@ -11,6 +11,7 @@ layout_theme = {
 }
 
 layouts = [
+    layout.Bsp(**layout_theme, fair=False),
     layout.Columns(**layout_theme),
     layout.Max(**layout_theme),
     layout.Stack(num_stacks=2, **layout_theme),
@@ -26,6 +27,7 @@ floating_layout = layout.Floating(
         Match(wm_class="ssh-askpass"),  # ssh-askpass
         Match(title="branchdialog"),  # gitk
         Match(title="pinentry"),  # GPG key password entry
+        Match(wm_class="xfce4-notifyd"),
     ]
 )
 layouts.append(floating_layout)

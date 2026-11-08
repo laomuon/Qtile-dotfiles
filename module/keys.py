@@ -61,6 +61,7 @@ keys = [
     Key([mod], "z", lazy.spawn("zotero"), desc="Launch zotero"),
     Key([mod], "a", lazy.spawn("zathura"), desc="Launch zathura"),
     Key([mod], "t", lazy.spawn("thunderbird"), desc="Launch thunderbird"),
+    Key([mod], "e", lazy.spawn("thunar"), desc="Launch thunar"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
