@@ -38,7 +38,7 @@ def forget_unplugged_screens():
 
 @hook.subscribe.screens_reconfigured
 def on_screen_change():
-    subprocess.Popen(["autorandr", "--change"])
+    subprocess.Popen(["autorandr", "--change", "--default", "horizontal"])
 
 
 @hook.subscribe.startup_complete
