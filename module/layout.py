@@ -30,4 +30,3 @@ floating_layout = layout.Floating(
         Match(wm_class="xfce4-notifyd"),
     ]
 )
-layouts.append(floating_layout)

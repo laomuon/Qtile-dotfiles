@@ -1,10 +1,41 @@
 from libqtile.lazy import lazy
-from libqtile.config import Click, Drag, Group, Key
+from libqtile.config import Click, Drag, Group, Key, Match
 from libqtile.widget import backlight
 
 mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
+
+# Apps that always open on a given workspace: wm_class -> group name
+app_groups = {"firefox_firefox": "2", "Zotero": "3", "Thunar": "4", "thunderbird": "5"}
+
+
+def show_group(qtile, group):
+    """Show a group, moving to its monitor instead of pulling it across."""
+    if group.screen:
+        qtile.focus_screen(group.screen.index)
+    else:
+        qtile.current_screen.set_group(group)
+
+
+@lazy.function
+def focus_or_spawn(qtile, wm_class, cmd):
+    """Go to an open window of this app, cycling if several. Launch it if none."""
+    windows = sorted(
+        (w for g in qtile.groups for w in g.windows if wm_class in (w.get_wm_class() or [])),
+        key=lambda w: w.wid,
+    )
+    if not windows:
+        qtile.spawn(cmd)
+        if wm_class in app_groups:
+            show_group(qtile, qtile.groups_map[app_groups[wm_class]])
+        return
+    current = qtile.current_window
+    target = windows[(windows.index(current) + 1) % len(windows)] if current in windows else windows[0]
+    show_group(qtile, target.group)
+    target.group.focus(target)
+    target.bring_to_front()
+
 
 keys = [
     # Switch between windows
@@ -54,10 +85,10 @@ keys = [
     Key([mod], "Backspace", lazy.spawn(browser), desc="Launch browser"),
     Key([mod], "s", lazy.spawn("spotify"), desc="Launch spotify"),
     Key([mod], "d", lazy.spawn("discord"), desc="Launch discord"),
-    Key([mod], "z", lazy.spawn("zotero"), desc="Launch zotero"),
+    Key([mod], "z", focus_or_spawn("Zotero", "zotero"), desc="Go to or launch zotero"),
     Key([mod], "a", lazy.spawn("zathura"), desc="Launch zathura"),
-    Key([mod], "t", lazy.spawn("thunderbird"), desc="Launch thunderbird"),
-    Key([mod], "e", lazy.spawn("thunar"), desc="Launch thunar"),
+    Key([mod], "t", focus_or_spawn("thunderbird", "thunderbird"), desc="Go to or launch thunderbird"),
+    Key([mod], "e", focus_or_spawn("Thunar", "thunar"), desc="Go to or launch thunar"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
@@ -97,6 +128,9 @@ keys = [
 
 groups = [Group(i, label="") for i in "123456"]
 
+
+for g in groups:
+    g.matches = [Match(wm_class=c) for c, name in app_groups.items() if name == g.name]
 
 for i in groups:
     keys.extend(
