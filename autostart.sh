@@ -8,6 +8,9 @@
 systemctl --user stop xfce4-notifyd.service
 dunst &
 
+# Battery and power notifications. Its systemd service needs graphical-session.target, which Qtile doesn't start.
+poweralertd &
+
 # Start ibux for unikey
 ibus-daemon -dxrR &
 
