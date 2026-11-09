@@ -9,7 +9,7 @@ terminal = "alacritty"
 browser = "firefox"
 
 # Apps that always open on a given workspace: wm_class -> group name
-app_groups = {"firefox_firefox": "2", "Zotero": "3", "Thunar": "4", "thunderbird": "5"}
+app_groups = {"tmux-main": "1", "firefox_firefox": "2", "KeePassXC": "2", "Zotero": "3", "Thunar": "4", "thunderbird": "5"}
 
 
 def show_group(qtile, group):

@@ -34,3 +34,10 @@ picom --daemon --config ~/.config/picom/picom.conf
 ## Start the network manager and bluetooth applet
 nm-applet &
 blueman-applet &
+
+## Launch apps. Each opens on its workspace through app_groups in module/keys.py
+alacritty --class Alacritty,tmux-main -e sh -c 'tmux attach || tmux' &
+firefox &
+keepassxc &
+zotero &
+thunderbird &
