@@ -4,6 +4,7 @@ from libqtile.config import Screen
 from qtile_extras import widget
 from qtile_extras.widget.decorations import PowerLineDecoration
 from .kanagawa import colors
+from .keys import show_keys
 
 powerline = {"decorations": [PowerLineDecoration(path="arrow_right")]}
 
@@ -69,6 +70,13 @@ def make_bar(primary=False):
 
     if primary:
         widgets += [
+            widget.TextBox(
+                name="keys_button",
+                text="",  # keyboard icon
+                foreground=colors["bold-color"],
+                fontsize=15,
+                mouse_callbacks={"Button1": show_keys()},
+            ),
             widget.Systray(),
             widget.Spacer(**powerline),
             widget.PulseVolume(background=colors["darker-foreground"], **powerline),

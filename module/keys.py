@@ -1,6 +1,8 @@
 from libqtile.lazy import lazy
 from libqtile.config import Click, Drag, Group, Key, Match
+from libqtile.utils import get_cache_dir
 from libqtile.widget import backlight
+import os
 
 mod = "mod4"
 terminal = "alacritty"
@@ -35,6 +37,25 @@ def focus_or_spawn(qtile, wm_class, cmd):
     show_group(qtile, target.group)
     target.group.focus(target)
     target.bring_to_front()
+
+
+@lazy.function
+def show_keys(qtile):
+    """List every key binding in a searchable rofi menu."""
+    names = {"mod4": "Mod", "shift": "Shift", "control": "Ctrl", "mod1": "Alt"}
+    rows = [
+        ("+".join([names.get(m, m) for m in k.modifiers] + [k.key]),
+         k.desc or " ".join(c.name for c in k.commands))
+        for k in qtile.config.keys
+    ]
+    width = max(len(combo) for combo, _ in rows) + 3
+    path = os.path.join(get_cache_dir(), "keys.txt")
+    with open(path, "w") as f:
+        f.writelines(f"{combo:<{width}}{what}\n" for combo, what in rows)
+    qtile.spawn([
+        "rofi", "-dmenu", "-i", "-no-custom", "-p", "keys", "-input", path,
+        "-font", "FiraCode Nerd Font Mono 10", "-theme-str", "window {width: 50%;}",
+    ])
 
 
 keys = [
