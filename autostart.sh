@@ -4,6 +4,10 @@
 #
 # xfce4-power-manager &
 
+# Start notifications. xfce4-notifyd can claim the D-Bus name first, so stop it.
+systemctl --user stop xfce4-notifyd.service
+dunst &
+
 # Start ibux for unikey
 ibus-daemon -dxrR &
 
@@ -19,10 +23,10 @@ xset s off -dpms &
 pkill greenclip; greenclip clear && greenclip daemon &
 
 # Start bentopdf
-docker start bentopdf
+docker start bentopdf >/dev/null 2>&1 &
 
 ## Starting compositor on startup
-picom --daemon --config ~/.config/picom/picom.conf -b
+picom --daemon --config ~/.config/picom/picom.conf
 
 ## Start the password-prompt service
 /usr/lib/policykit-1-gnome/polkit-gnome-authentication-agent-1 &

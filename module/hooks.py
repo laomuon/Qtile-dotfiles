@@ -6,8 +6,7 @@ import subprocess
 
 @hook.subscribe.startup_once
 def autostart():
-    home = os.path.expanduser("~/.config/qtile/autostart.sh")
-    subprocess.run([home])
+    subprocess.Popen([os.path.expanduser("~/.config/qtile/autostart.sh")])
 
 
 @hook.subscribe.client_focus
@@ -18,14 +17,12 @@ def float_to_front(window):
 
 @hook.subscribe.screens_reconfigured
 def on_screen_change():
-    home = os.path.expanduser("~/.config/qtile/change_screen.sh")
-    subprocess.run([home])
+    subprocess.Popen(["autorandr", "--change"])
 
 
 @hook.subscribe.startup_complete
 def on_startup_complete():
-    home = os.path.expanduser("~/.config/qtile/change_screen.sh")
-    subprocess.run([home])
+    subprocess.Popen([os.path.expanduser("~/.config/qtile/change_screen.sh")])
 #
 #
 # @hook.subscribe.suspend

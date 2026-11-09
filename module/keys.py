@@ -6,15 +6,7 @@ mod = "mod4"
 terminal = "alacritty"
 browser = "firefox"
 
-def _change_brightness(increased):
-    if increased:
-        lazy.spawn("brightnessctl -d intel_backlight +10%")
-    else:
-        lazy.spawn("brightnessctl -d intel_backlight 10%-")
-
 keys = [
-    # A list of available commands that can be bound to keys can be found
-    # at https://docs.qtile.org/en/latest/manual/config/lazy.html
     # Switch between windows
     Key([mod], "h", lazy.layout.left(), desc="Move focus to left"),
     Key([mod], "l", lazy.layout.right(), desc="Move focus to right"),
@@ -24,7 +16,7 @@ keys = [
         [mod],
         "space",
         lazy.window.toggle_maximize(),
-        desc="Move window focus to other window",
+        desc="Toggle maximize",
     ),
     # Move windows between left/right columns or move up/down in current stack.
     # Moving out of range in Columns layout will create new column.
@@ -54,6 +46,10 @@ keys = [
         lazy.layout.toggle_split(),
         desc="Toggle between split and unsplit sides of stack",
     ),
+    Key([mod, "shift"], "space", lazy.window.toggle_floating(), desc="Toggle floating"),
+    Key([mod, "shift"], "f", lazy.window.toggle_fullscreen(), desc="Toggle fullscreen"),
+    Key([mod], "period", lazy.next_screen(), desc="Focus next monitor"),
+    Key([mod], "comma", lazy.prev_screen(), desc="Focus previous monitor"),
     Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
     Key([mod], "Backspace", lazy.spawn(browser), desc="Launch browser"),
     Key([mod], "s", lazy.spawn("spotify"), desc="Launch spotify"),
@@ -87,7 +83,11 @@ keys = [
         ),
         desc="Open the clipboard menu",
     ),
-    Key([mod], "m", lazy.spawn("i3lock --nofork -t -i /home/dmmuon/.config/qtile/kana_dark_2.png"), desc="Lock the screen"),
+    Key([mod], "m", lazy.spawn("loginctl lock-session"), desc="Lock the screen"),
+    Key([mod], "g", lazy.spawn("dunstctl close"), desc="Close the latest notification"),
+    Key([mod, "shift"], "g", lazy.spawn("dunstctl close-all"), desc="Close all notifications"),
+    Key([mod], "b", lazy.spawn("dunstctl history-pop"), desc="Bring back the last notification"),
+    Key([mod, "shift"], "d", lazy.spawn("dunstctl set-paused toggle"), desc="Toggle do not disturb"),
     Key([], "XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol()),
     Key([], "XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol()),
     Key([], "XF86AudioMute", lazy.widget["pulsevolume"].mute()),

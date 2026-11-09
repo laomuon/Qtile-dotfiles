@@ -22,7 +22,6 @@ fi
 
 #############################################################################
 #
-Duplicate one screen
 
 # if ! (xrandr | grep "^HDMI-1" | grep "disconnected")
 # then
