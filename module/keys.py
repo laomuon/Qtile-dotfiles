@@ -89,6 +89,7 @@ keys = [
     Key([mod], "a", lazy.spawn("zathura"), desc="Launch zathura"),
     Key([mod], "t", focus_or_spawn("thunderbird", "thunderbird"), desc="Go to or launch thunderbird"),
     Key([mod], "e", focus_or_spawn("Thunar", "thunar"), desc="Go to or launch thunar"),
+    Key([mod], "p", lazy.spawn("/home/dmmuon/.config/qtile/tmux_picker.sh"), desc="Pick a tmux session"),
     # Toggle between different layouts as defined below
     Key([mod], "Tab", lazy.next_layout(), desc="Toggle between layouts"),
     Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
