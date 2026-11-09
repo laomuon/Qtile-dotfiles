@@ -43,7 +43,7 @@ def on_screen_change():
 
 @hook.subscribe.startup_complete
 def on_startup_complete():
-    subprocess.Popen([os.path.expanduser("~/.config/qtile/change_screen.sh")])
+    subprocess.Popen(["autorandr", "--change", "--default", "horizontal"])
 #
 #
 # @hook.subscribe.suspend
