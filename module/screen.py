@@ -31,17 +31,28 @@ keyboard_widget = widget.KeyboardLayout(
 )
 extension_defaults = widget_defaults.copy()
 
+
+class CenteredTextBox(widget.TextBox):
+    """A TextBox without the 1px downward offset Qtile adds to bar text."""
+
+    def _configure(self, qtile, parent_bar):
+        super()._configure(qtile, parent_bar)
+        draw = self.layout.draw
+        self.layout.draw = lambda x, y: draw(x, y - 1)
+
+
 def make_bar(primary=False):
     widgets = [
-        widget.CurrentLayoutIcon(fontsize=7),
+        widget.CurrentLayoutIcon(scale=0.65),
         widget.Sep(
             linewidth=0,
             padding=5,
             ),
-        widget.TextBox(
+        CenteredTextBox(
+            padding=7,
             text="",
             foreground=colors["bold-color"],
-            fontsize=20,
+            fontsize=17,
             mouse_callbacks={
                 "Button1": lazy.screen.prev_group()
                 },
@@ -55,11 +66,11 @@ def make_bar(primary=False):
             highlight_method="text",
             this_current_screen_border=colors["blue"],
             ),
-        widget.TextBox(
+        CenteredTextBox(
             font="FiraCode Nerd Font",
             text="",
             foreground=colors["bold-color"],
-            fontsize=20,
+            fontsize=17,
             mouse_callbacks={
                 "Button1": lazy.screen.next_group()
                 },
@@ -70,14 +81,14 @@ def make_bar(primary=False):
 
     if primary:
         widgets += [
-            widget.TextBox(
+            CenteredTextBox(
                 name="keys_button",
                 text="",  # keyboard icon
                 foreground=colors["bold-color"],
-                fontsize=15,
+                fontsize=17,
                 mouse_callbacks={"Button1": show_keys()},
             ),
-            widget.Systray(),
+            widget.Systray(icon_size=18),
             widget.Spacer(**powerline),
             widget.PulseVolume(background=colors["darker-foreground"], **powerline),
             keyboard_widget,
@@ -105,7 +116,7 @@ def make_bar(primary=False):
                 background=colors["darker-foreground"], **powerline
             ),
         ]
-    return bar.Bar(widgets, 25, margin=[0, 0, 5, 0], background=colors["background-color"])
+    return bar.Bar(widgets, 24, margin=[0, 0, 5, 0], background=colors["background-color"])
 
 
 screens = [
