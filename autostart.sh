@@ -15,7 +15,7 @@ poweralertd &
 ibus-daemon -dxrR &
 
 # Start i3lock for lockscreen
-xss-lock --transfer-sleep-lock -- i3lock --nofork -i /home/dmmuon/.config/qtile/kana_dark_2.png &
+xss-lock --transfer-sleep-lock -- /home/dmmuon/.config/qtile/lock.sh &
 
 # Disable screen blanking
 xset dpms 0 0 0 &
