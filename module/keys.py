@@ -141,6 +141,12 @@ keys = [
     Key([mod, "shift"], "g", lazy.spawn("dunstctl close-all"), desc="Close all notifications"),
     Key([mod], "b", lazy.spawn("dunstctl history-pop"), desc="Bring back the last notification"),
     Key([mod, "shift"], "d", lazy.spawn("dunstctl set-paused toggle"), desc="Toggle do not disturb"),
+    Key(
+        [mod, "control"],
+        "space",
+        lazy.widget["ibuskeyboardlayout"].next_keyboard(),
+        desc="Next keyboard layout (ibus engine)",
+    ),
     Key([], "XF86AudioRaiseVolume", lazy.widget["pulsevolume"].increase_vol()),
     Key([], "XF86AudioLowerVolume", lazy.widget["pulsevolume"].decrease_vol()),
     Key([], "XF86AudioMute", lazy.widget["pulsevolume"].mute()),

@@ -13,6 +13,8 @@ poweralertd &
 
 # Start ibux for unikey
 ibus-daemon -dxrR &
+# Ctrl+Super+Space is bound in qtile (module/keys.py), so drop ibus's own trigger
+gsettings set org.freedesktop.ibus.general.hotkey triggers "[]"
 
 # Start i3lock for lockscreen
 xss-lock --transfer-sleep-lock -- /home/dmmuon/.config/qtile/lock.sh &

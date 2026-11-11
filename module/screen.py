@@ -1,3 +1,5 @@
+import subprocess
+
 from libqtile import bar
 from libqtile.lazy import lazy
 from libqtile.config import Screen
@@ -8,14 +10,12 @@ from .keys import show_keys
 
 powerline = {"decorations": [PowerLineDecoration(path="arrow_right")]}
 
-configured_keyboard = ["us", "fr"]
+# ibus engines (see `ibus list-engine`); Bamboo gives Vietnamese Telex
+configured_keyboard = ["xkb:us::eng", "xkb:fr::fra", "Bamboo::Us"]
+keyboard_labels = {"xkb:us::eng": "US", "xkb:fr::fra": "FR", "Bamboo::Us": "VI"}
 
 browser = "firefox"
 
-
-@lazy.function
-def z_next_keyboard(qtile):
-    keyboard_widget.next_keyboard()
 
 widget_defaults = dict(
     font="FiraCode Nerd Font",
@@ -24,8 +24,29 @@ widget_defaults = dict(
     foreground=colors["foreground-color"],
     padding=10,
 )
-keyboard_widget = widget.KeyboardLayout(
+
+
+class _IBusBackend:
+    """KeyboardLayout backend that reads and switches ibus engines."""
+
+    def get_keyboard(self):
+        return subprocess.run(
+            ["ibus", "engine"], capture_output=True, text=True
+        ).stdout.strip()
+
+    def set_keyboard(self, layout, options):
+        subprocess.run(["ibus", "engine", layout])
+
+
+class IBusKeyboardLayout(widget.KeyboardLayout):
+    """KeyboardLayout driven by ibus instead of setxkbmap."""
+
+    backend = property(lambda self: _IBusBackend(), lambda self, _: None)
+
+
+keyboard_widget = IBusKeyboardLayout(
     configured_keyboards=configured_keyboard,
+    display_map=keyboard_labels,
     background=colors["lighter-foreground"],
     **powerline,
 )
